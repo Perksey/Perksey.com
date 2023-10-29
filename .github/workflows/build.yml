@@ -4,7 +4,7 @@
 name: .NET
 permissions:
   pages: write
-  contents: write
+  id-token: write
 on:
   push:
     branches: [ "main" ]
