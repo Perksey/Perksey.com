@@ -10,6 +10,20 @@ public class TailwindProcessModule : Module
     
     protected override async Task<IEnumerable<IDocument>> ExecuteContextAsync(IExecutionContext context)
     {
+        using var install = new Process();
+        install.StartInfo = new ProcessStartInfo
+        {
+            FileName = FileName,
+            Arguments = $"{C} {FormatArgs("npm i")}",
+            WorkingDirectory = Path.GetFullPath("../Node")
+        };
+
+        install.Start();
+        await install.WaitForExitAsync();
+        if (install.ExitCode != 0)
+        {
+            throw new("npm install failed!");
+        }
         var docs = context.Inputs.Where(x => x.Destination.Extension == ".html").ToList();
         var css = context.Inputs.First(x => x.Destination == "_site.css");
         await docs.ParallelForEachAsync(async doc =>
@@ -19,15 +33,13 @@ public class TailwindProcessModule : Module
         // Get the default destination file
         var dst = context.FileSystem.GetOutputFile(css.Destination);
         var tmp = Path.GetTempFileName();
-        static string FormatArgs(string s) => OperatingSystem.IsWindows() ? s : $"\"{s.Replace("\"", "\\\"")}\""; 
-        using var process = new Process
+        static string FormatArgs(string s) => OperatingSystem.IsWindows() ? s : $"\"{s.Replace("\"", "\\\"")}\"";
+        using var process = new Process();
+        process.StartInfo = new ProcessStartInfo
         {
-            StartInfo = new ProcessStartInfo
-            {
-                FileName = FileName,
-                Arguments = $"{C} {FormatArgs($"npx tailwind build -c tailwind.config.js -i \"\" -o \"{tmp}\"")}",
-                WorkingDirectory = Path.GetFullPath("../Node")
-            }
+            FileName = FileName,
+            Arguments = $"{C} {FormatArgs($"npx tailwind build -c tailwind.config.js -i \"\" -o \"{tmp}\"")}",
+            WorkingDirectory = Path.GetFullPath("../Node")
         };
 
         process.Start();
