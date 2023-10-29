@@ -1,7 +1,7 @@
 ﻿---
 IsPost: true
 Title: C# + WebAssembly + OpenGL = ?
-DateTimePublished: 30/10/2023 15:00
+DateTimePublished: 29/10/2023 16:20
 PreviewImage: /images/lightingdemo.png
 ---
 
@@ -533,7 +533,7 @@ function setCanvas(cbAsm, cbFun){
 }
 ```
 
-Next, a new interface was added on the Silk.NET side on the Silk.NET side: `INotifyCanvasDropped`. Basically, if a
+Next, a new interface was added on the Silk.NET side: `INotifyCanvasDropped`. Basically, if a
 `ViewImplementationBase` detected that the derived view also implemented `INotifyCanvasDropped`, this would act as a
 trigger for the concrete `IWindowPlatform` to reset its view state, thus resulting in the `IView` being destroyed and
 allowing `IWindowPlatform.GetView` to create a new view for a new canvas (when triggered by the Blazor client code).
