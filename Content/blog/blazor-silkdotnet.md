@@ -1,7 +1,7 @@
 ﻿---
 IsPost: true
 Title: C# + WebAssembly + OpenGL = ?
-DateTimePublished: 30/10/2023 15:00
+DateTimePublished: 29/10/2023 16:20
 PreviewImage: /images/lightingdemo.png
 ---
 
