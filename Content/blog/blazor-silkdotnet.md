@@ -9,7 +9,7 @@ PreviewImage: /images/lightingdemo.png
 
 <div class="mx-auto max-w-lg rounded-lg border border-slate-200 bg-neutral-100/50 p-4 dark:border-slate-800 dark:bg-neutral-900/50 print:hidden md:text-lg">
   <span class="font-semibold">TL;DR: I created a proof-of-concept of Silk.NET working in a browser. Try it out below, hosted courtesy of the .NET Foundation.</span>
-  <a href="https://silkblazordemo.perksey.com" class="flex grow items-center justify-center gap-1 rounded-md bg-emerald-300 px-4 py-2 transition ease-in-out hover:bg-emerald-200 dark:bg-emerald-700 dark:hover:bg-emerald-800 text-white">Try Silk.NET in your web browser!</a>
+  <a href="https://silkblazordemo.perksey.com" class="flex grow items-center justify-center gap-1 rounded-md bg-emerald-300 px-4 py-2 transition ease-in-out hover:bg-emerald-200 dark:bg-emerald-700 dark:hover:bg-emerald-800 text-black dark:text-white">Try Silk.NET in your web browser!</a>
 </div>
 
 High-performance graphics in a browser? Kind of sounds like an oxymoron given the interpreted nature of JavaScript, or
@@ -652,7 +652,7 @@ WASM, Emscripten, or anything else in the loop worked! All of the code used in t
 
 <div class="mx-auto max-w-lg rounded-lg border border-slate-200 bg-neutral-100/50 p-4 dark:border-slate-800 dark:bg-neutral-900/50 print:hidden md:text-lg">
   <span class="font-semibold">View the source code for the hacky prototype!</span>
-  <a href="https://github.com/dotnet/Silk.NET/tree/feature/wasm-take-4/src/Lab/Experiments/TriangleWasm" class="flex grow items-center justify-center gap-1 rounded-md bg-emerald-300 px-4 py-2 transition ease-in-out hover:bg-emerald-200 dark:bg-emerald-700 dark:hover:bg-emerald-800 text-white">View on GitHub</a>
+  <a href="https://github.com/dotnet/Silk.NET/tree/feature/wasm-take-4/src/Lab/Experiments/TriangleWasm" class="flex grow items-center justify-center gap-1 rounded-md bg-emerald-300 px-4 py-2 transition ease-in-out hover:bg-emerald-200 dark:bg-emerald-700 dark:hover:bg-emerald-800 text-black dark:text-white">View on GitHub</a>
 </div>
 
 We're extremely hopeful about the future of .NET and Silk.NET in the Web, and although this blog post went into a lot of
