@@ -1,0 +1,76 @@
+﻿---
+Title: Blog
+---
+
+@{
+    List<Dictionary<string, object>> allPosts = Model.Get<List<Dictionary<string, object>>>("AllPosts");
+}
+
+<div class="mb-4 flex flex-col justify-between gap-2 lg:flex-row">
+  <h2 class="text-3xl font-extrabold md:text-4xl">Blog Posts</h2>
+</div>
+<div style="position: relative;">
+  @foreach (var post in allPosts.OrderByDescending(x => (DateTime)x["DateTimePublished"]))
+  {
+    object title, url, previewImage;
+    object dt;
+    if (!post.TryGetValue("Title", out title) ||
+        string.IsNullOrWhiteSpace(title.ToString()) ||
+        !post.TryGetValue("PostUrl", out url) ||
+        string.IsNullOrWhiteSpace(url.ToString()))
+    {
+      continue;
+    }
+  <a
+    class="group relative mb-4 block overflow-hidden rounded-lg border border-zinc-200 drop-shadow dark:border-zinc-800 dark:bg-neutral-900/30"
+    aria-label="@title"
+    href="@url"
+  >
+    <img
+      data-nimg="fill"
+      class="absolute -z-10 object-cover brightness-50 transition ease-in-out group-hover:scale-105"
+      sizes="100vw"
+      src="@(!post.TryGetValue("PreviewImage", out previewImage) || string.IsNullOrWhiteSpace(previewImage.ToString()) ? "/images/pixel.png" : previewImage.ToString())"
+      style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"
+    />
+    <div
+      class="flex flex-col justify-between gap-1 bg-gradient-to-b from-transparent to-zinc-950 p-4 text-white ease-in-out lg:flex-row"
+      style="min-height: 125px; max-height: 150px;"
+    >
+      @{
+          string? external = null;
+          @if (post.TryGetValue("ExternalPost", out var strObj) && strObj is string str)
+          {
+              external = str;
+          }
+      }
+      <div class="text-zinc-300 md:text-lg">
+        <time>
+        @if (!post.TryGetValue("DateTimePublished", out dt) || dt is null || !(dt is DateTime) || dt is DateTime { Year: 1 })
+        {
+            @("A while ago")
+        }
+        else if (dt is DateTime date)
+        {
+            @(date.ToString("d MMMM yyyy"))
+        }
+        @if (external != null)
+        {
+           <span class="bg-blue-900 text-blue-300 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">External</span>
+        }
+        </time>
+        <br />
+        <!-- TODO reading time? -->
+      </div>
+      <div class="w-full lg:w-2/3" style="display: table">
+        <h1 class="mb-1 text-xl font-bold md:text-2xl">
+        @post["Title"]
+        </h1>
+        <p class="text-lg text-zinc-300 md:text-xl block-with-text">
+          @post["FirstParagraph"]
+        </p>
+      </div>
+    </div>
+  </a>
+  }
+</div>

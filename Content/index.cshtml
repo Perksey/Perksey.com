@@ -1,0 +1,167 @@
+﻿@{
+    List<Dictionary<string, object>> allPosts = Model.Get<List<Dictionary<string, object>>>("AllPosts").OrderByDescending(x => (DateTime)x["DateTimePublished"]).Take(2).ToList();
+}
+
+<div
+  class="absolute left-0 -z-10 w-screen overflow-x-clip md:relative md:w-full md:overflow-x-visible"
+>
+  <div
+    class="right-0 bg-blue-400/30 dark:bg-blue-600/30 absolute h-72 w-72 rounded-full blur-3xl"
+  ></div>
+  <div
+    class="right-36 top-28 bg-purple-400/30 dark:bg-purple-600/30 absolute h-72 w-72 rounded-full blur-3xl"
+  ></div>
+</div>
+<div class="max-w-3xl space-y-4 text-xl md:text-2xl">
+  <p>
+    <strong
+      class="bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text font-semibold text-transparent print:text-inherit"
+      >Hi there! I'm Dylan Perks:</strong
+    > software engineer by day, open-source software maintainer by night. I work on a lot of open-source projects, but you probably know me from <strong class="bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text font-semibold text-transparent print:text-inherit"><a href="https://github.com/dotnet/Silk.NET">Silk.NET</a></strong>.
+  </p>
+  <p>
+    I'm a keen, driven developer with a passion for software quality and longevity, I have a natural flair for computer science having developed an advanced skillset through self-education and networking throughout the last 10 years.
+    You can see all of the projects I've worked on, employers I've worked for, and any other career step of note in
+    <a href="/portfolio"
+      ><strong
+        class="bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text font-semibold text-transparent print:text-inherit"
+        >my portfolio</strong
+      ></a
+    >. If you'd like to get in touch, email me at
+    <a class="font-semibold" href="mailto:dylan@perksey.com"
+      >dylan@perksey.com</a
+    >.
+  </p>
+  <p>
+    In most of the work I do I try to bridge the world of <strong class="bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text font-semibold text-transparent print:text-inherit">developer technologies</strong>,
+    for which I have been awarded a <a href="https://mvp.microsoft.com/en-US/MVP/profile/f18fb5a8-6d27-ed11-9db2-000d3a1028ba"><strong class="bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text font-semibold text-transparent print:text-inherit">Microsoft Most-Valuable Professional (MVP) Award</strong></a>,
+    <strong class="bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text font-semibold text-transparent print:text-inherit">reusability</strong>,
+    <strong class="bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text font-semibold text-transparent print:text-inherit">efficiency</strong>,
+    and <strong class="bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text font-semibold text-transparent print:text-inherit">open-source</strong>,
+    as these together help transform software from just being one solution to an ecosystem of malleable, widely-applicable solutions.
+  </p>
+</div>
+<div class="my-4 flex items-baseline justify-between">
+  <h2 class="text-2xl font-bold">Blog Posts</h2>
+  <a
+    class="group ml-8 transition-colors hover:text-slate-600 dark:hover:text-slate-400"
+    href="/blog"
+    >View All
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="inline-block transition-transform ease-in-out group-hover:translate-x-0.5"
+    >
+      <path d="M5 12l14 0"></path>
+      <path d="M13 18l6 -6"></path>
+      <path d="M13 6l6 6"></path></svg
+  ></a>
+</div>
+<div class="mx-auto mb-4 grid grid-cols-2 gap-4 md:grid-cols-3">
+  <a
+    class="group relative h-60 overflow-hidden rounded-xl text-white first:col-span-2 only:col-span-full max-md:last:even:col-span-full md:h-80 md:last:[&amp;:nth-child(3)]:col-span-full last:[&amp;:nth-child(4)]:col-span-2"
+    href="@allPosts[0]["PostUrl"]"
+    ><img
+      data-nimg="fill"
+      class="object-cover transition ease-in-out group-hover:scale-105"
+      sizes="(max-width: 896px) 100vw, 896px"
+      src="@allPosts[0]["PreviewImage"]"
+      style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"
+    />
+    <div
+      class="absolute h-min w-full bg-gradient-to-b from-black/70 via-black/70 via-80% p-4 group-first:via-black/70"
+    >
+      <div class="text-base drop-shadow-sm">
+        @if (((DateTime)allPosts[0]["DateTimePublished"]).Year == 1)
+        {
+            @("A while ago")
+        }
+        else
+        {
+            @(((DateTime)allPosts[0]["DateTimePublished"]).ToString("d MMMM yyyy"))
+        }
+      </div>
+      <h1
+        class="max-w-lg text-2xl font-bold drop-shadow-sm md:group-first:text-3xl"
+      >
+        <span
+          data-br=":r6:"
+          data-brr="1"
+          style="display: inline-block; vertical-align: top; text-decoration: inherit;"
+          >@allPosts[0]["Title"]</span
+        >
+      </h1>
+    </div>
+    <div
+      class="absolute bottom-4 left-4 rounded-lg bg-slate-600/30 px-4 py-2 text-sm backdrop-blur transition hover:bg-slate-600/60 md:text-base"
+    >
+      Read post
+    </div></a
+  ><a
+    class="group relative h-60 overflow-hidden rounded-xl text-white first:col-span-2 only:col-span-full max-md:last:even:col-span-full md:h-80 md:last:[&amp;:nth-child(3)]:col-span-full last:[&amp;:nth-child(4)]:col-span-2"
+    href="@allPosts[1]["PostUrl"]"
+    ><img
+      class="object-cover transition ease-in-out group-hover:scale-105"
+      sizes="(max-width: 896px) 100vw, 896px"
+      src="@allPosts[1]["PreviewImage"]"
+      style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"
+    />
+    <div
+      class="absolute h-min w-full bg-gradient-to-b from-black/70 via-black/70 via-80% p-4 group-first:via-black/70"
+    >
+      <div class="text-base drop-shadow-sm">
+        @if (((DateTime)allPosts[1]["DateTimePublished"]).Year == 1)
+        {
+            @("A while ago")
+        }
+        else
+        {
+            @(((DateTime)allPosts[1]["DateTimePublished"]).ToString("d MMMM yyyy"))
+        }
+      </div>
+      <h1
+        class="max-w-lg text-2xl font-bold drop-shadow-sm md:group-first:text-3xl"
+      >
+        <span
+          data-br=":r6:"
+          data-brr="1"
+          style="display: inline-block; vertical-align: top; text-decoration: inherit;"
+          >@allPosts[1]["Title"]</span
+        >
+      </h1>
+    </div>
+    <div
+      class="absolute bottom-4 left-4 rounded-lg bg-slate-600/30 px-4 py-2 text-sm backdrop-blur transition hover:bg-slate-600/60 md:text-base"
+    >
+      Read post
+    </div></a
+  >
+</div>
+<div
+  class="absolute left-0 -z-10 w-screen overflow-x-clip md:relative md:w-full md:overflow-x-visible"
+>
+  <div
+    class="bg-emerald-400/30 dark:bg-emerald-600/30 absolute h-72 w-72 rounded-full blur-3xl"
+  ></div>
+  <div
+    class="left-72 top-16 bg-cyan-400/30 dark:bg-cyan-600/30 absolute h-72 w-72 rounded-full blur-3xl"
+  ></div>
+</div>
+<h2 class="my-4 text-2xl font-bold">GitHub Sponsors</h2>
+<p class="mx-auto my-4 max-w-2xl text-xl">
+  Maintaining open-source projects is difficult. However, you can help! By becoming a GitHub Sponsor, not only will you
+  financially support my open-source projects and contributions, you'll also get an occasional newsletter and
+  sneak-peeks into my upcoming projects!
+</p>
+<div
+  class="mx-auto max-w-lg rounded-lg border border-slate-200 bg-neutral-100/50 p-4 dark:border-slate-800 dark:bg-neutral-900/50 print:hidden md:text-lg"
+>
+  <a href="https://github.com/sponsors/Perksey" class="flex grow items-center justify-center gap-1 rounded-md bg-emerald-300 px-4 py-2 transition ease-in-out hover:bg-emerald-200 dark:bg-emerald-700 dark:hover:bg-emerald-800">Become a GitHub Sponsor</a>
+</div>
