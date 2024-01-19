@@ -23,7 +23,7 @@ await Bootstrapper.Factory
     (
         "Static",
         builder => builder.WithInputReadFiles()
-            .WithProcessModules(new CopyFiles("images/**/*", "*.pdf"))
+            .WithProcessModules(new CopyFiles("images/**/*", "*.pdf", "**/*.pdf", "**/userflow"))
     )
     .BuildPipeline
     (
