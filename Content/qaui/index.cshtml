@@ -1,0 +1,298 @@
+---
+Title: Practice Test
+---
+
+<div class="mb-4 flex flex-col justify-between gap-2 lg:flex-row">
+    <h2 class="text-3xl font-extrabold md:text-4xl" id="qauiHeader">Practice Test</h2>
+</div>
+<div style="position: relative;">
+    <div id="qauiIntro" style="">
+        <p>Welcome to the $name$! This practice test contains $questions$ questions, chosen randomly from a set of
+            $totalquestions$ in the following
+            categories:</p><br />
+        <ul class="list-disc" id="qauiCategories">
+            <li>$catname$: $catq$ questions.</li>
+        </ul><br />
+        <p>This practice test has a time limit of $mins$ minutes.</p><br />
+        <p>There is no guarantee of accuracy in the questions or answers provided, and there is no guarantee that
+            completing this practice test will be helpful for your studies - see <a
+                class="bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text font-semibold text-transparent print:text-inherit"
+                href="https://github.com/Perksey/Perksey.com/blob/main/LICENSE.md">the site license</a>.</p><br />
+        <p>Ready to begin?</p>
+        <div
+            class="mx-auto max-w-lg rounded-lg border border-slate-200 bg-neutral-100/50 p-4 dark:border-slate-800 dark:bg-neutral-900/50 print:hidden md:text-lg">
+            <a href="#"
+                class="flex grow items-center justify-center gap-1 rounded-md bg-emerald-300 px-4 py-2 transition ease-in-out hover:bg-emerald-200 dark:bg-emerald-700 dark:hover:bg-emerald-800"
+                onclick="start()">Start
+                Exam</a>
+        </div>
+
+    </div>
+    <div id="qauiQuestion" style="display: none; height: 200px;">
+        <p>$question$</p>
+        <br />
+        <div class="flex" id="qauiOneAnswer">
+            <input type="checkbox"
+                class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none checkbox"
+                id="qauiBox$idx$" onclick="checkboxControl($idx$)">
+            <label for="qauiBox$idx$" class="ms-3">$answer$</label>
+        </div>
+    </div>
+    <div id="qauiButtons" style="display: none;">
+        <div
+            class="mx-auto max-w-lg rounded-lg border border-slate-200 bg-neutral-100/50 p-4 dark:border-slate-800 dark:bg-neutral-900/50 print:hidden md:text-lg">
+            <a href="#"
+                class="inline-flex grow items-center justify-center gap-1 rounded-md bg-emerald-300 px-4 py-2 transition ease-in-out hover:bg-emerald-200 dark:bg-emerald-700 dark:hover:bg-emerald-800"
+                style="width: 32.5%;" onclick="navigate(-1, false)">Previous</a>
+            <a href="#"
+                class="inline-flex grow items-center justify-center gap-1 rounded-md bg-emerald-300 px-4 py-2 transition ease-in-out hover:bg-emerald-200 dark:bg-emerald-700 dark:hover:bg-emerald-800"
+                style="width: 32.5%;" onclick="submit()">Submit</a>
+            <a href="#"
+                class="inline-flex grow items-center justify-center gap-1 rounded-md bg-emerald-300 px-4 py-2 transition ease-in-out hover:bg-emerald-200 dark:bg-emerald-700 dark:hover:bg-emerald-800"
+                style="width: 32.5%;" onclick="navigate(1, false)">Next</a>
+        </div>
+    </div>
+    <div id="qauiOutro" style="display: none;">
+        <p>Below is a breakdown of your results.</p><br />
+        <ul class="list-disc" id="qauiCategoriesBreakdown">
+            <li>$catname$: $catresult$</li>
+        </ul><br />
+        <p>Past performance is not indicative of future results.</p><br />
+        <div id="qauiBreakdown">
+            <br />
+            <h3 class="text-2xl font-extrabold md:text-3xl">$catname$</h3>
+            <div id="qauiQuestionBreakdown">
+                <br />
+                <p>$qn$. <strong
+                        class="bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text font-semibold text-transparent print:text-inherit">$qcat$</strong>:
+                    $question$</p>
+                <br />
+                <div class="flex" id="qauiOneAnswerBreakdown">
+                    <input type="checkbox"
+                        class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none checkbox"
+                        id="qauiBoxBreakdown$idx$_$qn$" disabled placeholder_checked>
+                    <label for="qauiBoxBreakdown$idx$_$qn$" class="ms-3">$answer$</label>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div
+            class="mx-auto max-w-lg rounded-lg border border-slate-200 bg-neutral-100/50 p-4 dark:border-slate-800 dark:bg-neutral-900/50 print:hidden md:text-lg">
+            <a href="javascript:location.reload()"
+                class="flex grow items-center justify-center gap-1 rounded-md bg-emerald-300 px-4 py-2 transition ease-in-out hover:bg-emerald-200 dark:bg-emerald-700 dark:hover:bg-emerald-800">Restart
+                Exam</a>
+        </div>
+    </div>
+</div>
+<div id="qauiProgress" style="display: none;">
+    <br />
+    <div class="mb-1 text-base font-medium dark:text-white" id="qauiProgressText">Exam Progress: 45%</div>
+    <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
+        <div class="bg-emerald-300 h-2.5 rounded-full dark:bg-emerald-700" style="width: 45%" id="qauiProgressBar">
+        </div>
+    </div>
+</div>
+<script>
+    var maxItems = 0;
+    function checkboxControl(thisBox) {
+        let total = 0;
+        let elem = document.getElementsByClassName("checkbox");
+        for (let i = 0; i < elem.length; i++) {
+            if (elem[i].checked && i != thisBox) {
+                if (maxItems == 1) {
+                    elem[i].checked = false;
+                } else {
+                    total++;
+                }
+            }
+        }
+        if (total >= maxItems) {
+            elem[thisBox].checked = false;
+        }
+    }
+    var questions = [];
+    var currentQuestionSbox = [];
+    var currentQuestion = 0;
+    var categories = {};
+    var oneAnswerTemplate = "";
+    var questionTemplate = "";
+    var endTimestamp = 0;
+    var examData = {};
+    function navigate(delta, first) {
+        if ((delta == -1 && currentQuestion == 0) || (delta == 1 && currentQuestion == (questions.length - 1))) {
+            return;
+        }
+        maxItems = 0;
+        let elem = document.getElementsByClassName("checkbox");
+        let checked = [];
+        for (let i = 0; i < elem.length; i++) {
+            if (elem[i].checked == true) {
+                checked.push(i);
+            }
+        }
+        if (!first) {
+            questions[currentQuestionSbox[currentQuestion]].checked = checked;
+        }
+        currentQuestion += delta;
+        let question = questions[currentQuestionSbox[currentQuestion]];
+        let element = document.getElementById("qauiQuestion");
+        let newHtml = questionTemplate.replaceAll("$question$", question.text);
+        for (let i = 0; i < question.answers.length; i++) {
+            newHtml += oneAnswerTemplate.replaceAll("$answer$", question.answers[i].text).replaceAll("$idx$", i);
+            if (question.answers[i].correct) {
+                maxItems++;
+            }
+        }
+        element.innerHTML = newHtml;
+        document.getElementById("qauiHeader").innerText = "Question " + (currentQuestion + 1);
+        elem = document.getElementsByClassName("checkbox");
+        for (let i = 0; i < elem.length; i++) {
+            if (question.checked.includes(i)) {
+                elem[i].checked = true;
+            }
+        }
+        updateProgress(false);
+    }
+    function updateProgress(callback) {
+        let currentProgress = (currentQuestion / questions.length) * 100;
+        document.getElementById("qauiProgressBar").style.width = currentProgress + "%";
+        let timeLeft = endTimestamp - Date.now();
+        document.getElementById("qauiProgressText").innerText = "Exam Progress: " + Math.trunc(currentProgress) + "%, Time Remaining: " + String(Math.trunc(timeLeft / 60000)).padStart(2, '0') + ":" + String(Math.trunc((timeLeft % 60000) / 1000)).padStart(2, '0');
+        if (timeLeft <= 0) {
+            submit();
+            return;
+        }
+        if (callback) {
+            setTimeout(() => { updateProgress(true); }, 1000);
+        }
+    }
+    function start() {
+        document.getElementById("qauiIntro").style.display = "none";
+        document.getElementById("qauiQuestion").style.display = "inherit";
+        document.getElementById("qauiButtons").style.display = "inherit";
+        document.getElementById("qauiProgress").style.display = "inherit";
+        endTimestamp = Date.now() + (examData.numMinutes * 60000);
+        navigate(0, true);
+        setTimeout(() => { updateProgress(true); }, 1000);
+    }
+    function submit() {
+        navigate(0, false); // to save any answers
+        let nCorrect = 0;
+        let categoriesCorrect = {};
+        for (const category in examData.categories) {
+            categoriesCorrect[category] = 0;
+        }
+        for (let i = 0; i < questions.length; i++) {
+            questions[i].correct = true;
+            for (let j = 0; j < questions[i].answers.length; j++) {
+                if (questions[i].answers[j].correct != questions[i].checked.includes(j)) {
+                    questions[i].correct = false;
+                }
+            }
+            if (questions[i].correct) {
+                categoriesCorrect[questions[i].category]++;
+                nCorrect++;
+            }
+        }
+        document.getElementById("qauiQuestion").style.display = "none";
+        document.getElementById("qauiButtons").style.display = "none";
+        document.getElementById("qauiProgress").style.display = "none";
+        document.getElementById("qauiOutro").style.display = "inherit";
+        document.getElementById("qauiHeader").innerText = "Result: " + resultStr(nCorrect, examData.passMark, questions.length);
+        catElem = document.getElementById("qauiCategoriesBreakdown");
+        let result = "";
+        for (const category in examData.categories) {
+            result += catElem.innerHTML.replaceAll("$catname$", category).replaceAll("$catresult$", resultStr(categoriesCorrect[category], examData.categories[category] * (examData.passMark / questions.length), examData.categories[category]))
+        }
+        catElem.innerHTML = result;
+        let oneAnswer = document.getElementById("qauiOneAnswerBreakdown");
+        let question = document.getElementById("qauiQuestionBreakdown");
+        let breakdown = document.getElementById("qauiBreakdown");
+        question.removeChild(oneAnswer);
+        oneAnswer.removeAttribute("id");
+        let oneAnswerTemplateBreakdown = oneAnswer.outerHTML;
+        breakdown.removeChild(question);
+        question.removeAttribute("id");
+        let questionTemplateBreakdown = question.innerHTML;
+        question.innerHTML = "$qb$";
+        let questionTemplateOuter = question.outerHTML;
+        let breakdownTemplate = breakdown.innerHTML;
+        result = "";
+        for (const category in examData.categories) {
+            let appended = false;
+            for (let i = 0; i < questions.length; i++) {
+                let thisQ = questions[currentQuestionSbox[i]];
+                if (!thisQ.correct && thisQ.category == category) {
+                    if (!appended) {
+                        result += breakdownTemplate.replaceAll("$catname$", category);
+                        appended = true;
+                    }
+                    let thisQElem = questionTemplateBreakdown.replaceAll("$qn$", i + 1).replaceAll("$qcat$", category).replaceAll("$question$", thisQ.text);
+                    for (let j = 0; j < thisQ.answers.length; j++) {
+                        thisQElem += oneAnswerTemplateBreakdown.replaceAll("$qn$", i + 1).replaceAll("$idx$", j).replaceAll("$answer$", (thisQ.answers[j].correct ? "Correct Answer: " : "Incorrect Answer: ") + thisQ.answers[j].text).replaceAll("placeholder_checked", (thisQ.checked.includes(j) ? "checked" : ""));
+                    }
+                    result += questionTemplateOuter.replaceAll("$qb$", thisQElem);
+                }
+            }
+        }
+        breakdown.innerHTML = result;
+    }
+    function resultStr(nCorrect, passMark, numQuestions) {
+        return (nCorrect > passMark ? "PASSING" : "FAILING") + " - " + nCorrect + "/" + numQuestions + " (" + ((nCorrect / numQuestions) * 100) + "%)";
+    }
+    function shuffle(array) {
+        let currentIndex = array.length;
+
+        // While there remain elements to shuffle...
+        while (currentIndex != 0) {
+
+            // Pick a remaining element...
+            let randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // And swap it with the current element.
+            [array[currentIndex], array[randomIndex]] = [
+                array[randomIndex], array[currentIndex]];
+        }
+    }
+    async function init() {
+        examData = await (await fetch(new URLSearchParams(window.location.search).get("exam") + ".json")).json();
+        let intro = document.getElementById("qauiIntro");
+        let allQs = 0;
+        for (const category in examData.questions) {
+            allQs += examData.questions[category].length;
+            shuffle(examData.questions[category]);
+            for (let i = 0; i < examData.categories[category]; i++) {
+                let q = examData.questions[category][i];
+                q.category = category;
+                q.checked = [];
+                q.correct = false;
+                questions.push(q);
+            }
+        }
+        currentQuestionSbox = [...Array(examData.numQuestions).keys()];
+        categories = examData.categories;
+        shuffle(currentQuestionSbox);
+        intro.innerHTML = intro.innerHTML.replaceAll("$name$", examData["name"]).replaceAll("$questions$", examData["numQuestions"]).replaceAll("$mins$", examData["numMinutes"]).replaceAll("$totalquestions$", allQs);
+        catElem = document.getElementById("qauiCategories");
+        let result = "";
+        for (const category in examData.categories) {
+            result += catElem.innerHTML.replaceAll("$catname$", category).replaceAll("$catq$", examData.categories[category])
+        }
+        catElem.innerHTML = result;
+        let oneAnswer = document.getElementById("qauiOneAnswer");
+        let question = document.getElementById("qauiQuestion");
+        question.removeChild(oneAnswer);
+        oneAnswer.removeAttribute("id");
+        oneAnswerTemplate = oneAnswer.outerHTML;
+        questionTemplate = question.innerHTML;
+    }
+    window.onload = async () => {
+        try {
+            await init();
+        } catch (ex) {
+            let intro = document.getElementById("qauiIntro");
+            intro.innerHTML = "<p>Failed to load: " + ex + "</p>";
+        }
+    };
+</script>
