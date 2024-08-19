@@ -8,7 +8,8 @@
         "href": "http://m.me/164583210081098"
       }
     ],
-    "ack": false
+    "ack": false,
+    "id": "MOTD-2024-08-19"
   },
   "es": {
     "header": "We're experiencing technical difficulties.",
@@ -19,6 +20,7 @@
         "href": "http://m.me/164583210081098"
       }
     ],
-    "ack": false
+    "ack": false,
+    "id": "MOTD-2024-08-19"
   }
 }
