@@ -43,7 +43,10 @@ await Bootstrapper.Factory
                     ),
                 new AddPostLists(new Dictionary<string, List<string>>
                 {
-                    { "https://dotnet.github.io/Silk.NET/blog/feed.rss", new List<string> { "Perksey", "Dylan Perks" } }
+                    {
+                        "https://dotnet.github.io/Silk.NET/blog/feed.rss",
+                        ["Perksey", "Dylan Perks", "dylan@perksey.com (Dylan Perks)"]
+                    }
                 }),
                 new ForAllMatching(true)
                     .WithFilterPatterns("blog/{**/*,!index.cshtml}")

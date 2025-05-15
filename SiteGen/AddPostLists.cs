@@ -30,14 +30,22 @@ public class AddPostLists(Dictionary<string, List<string>> rssToAuthorNameMaps) 
                         .ReadElementString();
                     var html = new HtmlDocument();
                     html.LoadHtml(str);
+                    var preview = post.Links.FirstOrDefault(x => x.RelationshipType == "enclosure")?.Uri.ToString() ?? "";
+                    if (string.IsNullOrWhiteSpace(preview))
+                    {
+                        var theRealUrlContents = await _client.GetStringAsync(uri);
+                        var theRealHtml = new HtmlDocument();
+                        theRealHtml.LoadHtml(theRealUrlContents);
+                        preview = theRealHtml.DocumentNode.SelectNodes("//meta[@property = 'og:image']")?
+                            .FirstOrDefault()?
+                            .GetAttributeValue("content", "") ?? ""; 
+                    }
+                    
                     var thisDict = new Dictionary<string, object>
                     {
                         { "IsPost", true },
                         { "ExternalPost", uri.ToString() },
-                        {
-                            "PreviewImage",
-                            post.Links.FirstOrDefault(x => x.RelationshipType == "enclosure")?.Uri.ToString() ?? ""
-                        },
+                        { "PreviewImage", preview },
                         { "Title", post.Title.Text },
                         { "DateTimePublished", post.PublishDate.DateTime },
                         { "PostUrl", $"/{path}" },
