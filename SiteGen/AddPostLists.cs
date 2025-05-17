@@ -26,6 +26,11 @@ public class AddPostLists(Dictionary<string, List<string>> rssToAuthorNameMaps) 
                 {
                     var uri = post.Links.First(x => x.RelationshipType == "alternate").Uri;
                     var path = $"blog/{prefix}-{uri.Segments.Last()}";
+                    if (string.IsNullOrWhiteSpace(Path.GetExtension(path)))
+                    {
+                        path += ".html";
+                    }
+
                     var str = post.ElementExtensions.First(x => x.OuterName == "encoded").GetReader()
                         .ReadElementString();
                     var html = new HtmlDocument();

@@ -32,7 +32,7 @@ public class InterpAsPost : Module
         }
 
         // TODO <time dateTime={post.date}>{post.formattedDate}</time> &bull;{" "}{post.readingTime} min read
-        await str.WriteLineAsync(content);
+        await str.WriteLineAsync(content.Replace("@", "&#64;"));
         await str.WriteLineAsync("</article>");
         return str.ToString();
     }
